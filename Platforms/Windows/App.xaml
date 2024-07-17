@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="NovelAI_GUI_Client.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:NovelAI_GUI_Client.WinUI">
+
+</maui:MauiWinUIApplication>
