@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NovelAI_GUI_Client.MainPage">
+             x:Class="NovelAI_GUI_Client.MainPage"
+             Loaded="ContentPage_Loaded">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Option" Clicked="Button_Clicked_Option">
         </ToolbarItem>

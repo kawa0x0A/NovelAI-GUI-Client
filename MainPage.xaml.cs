@@ -46,6 +46,7 @@ namespace NovelAI_GUI_Client
 
         private readonly DataSet dataSet = new();
         private readonly OptionDataSet optionDataSet = new();
+        private static bool IsFirstLoaded = true;
 
         public MainPage(IHttpClientFactory httpClientFactory)
         {
@@ -56,13 +57,30 @@ namespace NovelAI_GUI_Client
             optionDataSet.LoadOption();
 
             novelAiApi = new NovelAiApi(httpClientFactory);
+        }
 
-            novelAiApi.SetApiKey(optionDataSet.ApiKey);
+        private async void ContentPage_Loaded(object sender, EventArgs e)
+        {
+            if (IsFirstLoaded && string.IsNullOrEmpty(optionDataSet.ApiKey))
+            {
+                var result = await DisplayAlert("Api Key", "set Api Key.", "OK", "Cancel");
+
+                if (result)
+                {
+                    await Navigation.PushAsync(new OptionPage(optionDataSet));
+                }
+            }
+            else
+            {
+                novelAiApi.SetApiKey(optionDataSet.ApiKey);
+            }
+
+            IsFirstLoaded = false;
         }
 
         private async void Button_Clicked_Option(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new OptionPage(novelAiApi, optionDataSet));
+            await Navigation.PushAsync(new OptionPage(optionDataSet));
         }
 
         private async void Button_Clicked_GenerateImage(object sender, EventArgs e)
