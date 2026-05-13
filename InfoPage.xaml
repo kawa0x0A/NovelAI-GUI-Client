@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NovelAI_GUI_Client.InfoPage"
+             Title="InfoPage">
+    <ContentView>
+        <ContentView.GestureRecognizers>
+            <DropGestureRecognizer AllowDrop="True" Drop="DropGestureRecognizer_Drop"/>
+        </ContentView.GestureRecognizers>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Grid.Column="0" Source="{Binding Image, Mode=OneWay}" Aspect="AspectFit"/>
+            <ScrollView Grid.Row="0" Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout Grid.Row="0" Grid.Column="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Prompt" VerticalTextAlignment="Center"/>
+                            <Button Text="Test"/>
+                            <Button Text="Copy"/>
+                        </StackLayout>
+                        <Editor Text="{Binding Prompt, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Negative Prompt" VerticalTextAlignment="Center"/>
+                            <Button Text="Test"/>
+                            <Button Text="Copy"/>
+                        </StackLayout>
+                        <Editor Text="{Binding NegativePrompt, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Steps" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Steps, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Sampler" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Sampler, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="CFG Scale" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding CfgScale, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Seed" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Seed, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Width" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Width, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Height" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Height, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Model Hash" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding ModelHash, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Model" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Model, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Batch Size" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding BatchSize, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Batch Pos" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding BatchPos, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="3" Grid.Column="0">
+                        <Label Text="Other Parameters" VerticalTextAlignment="Center"/>
+                        <Editor Text="{Binding OtherParameters, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+
+                        <Label Text="Parameters" VerticalTextAlignment="Center"/>
+                        <Editor Text="{Binding Parameters, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="4" Grid.Column="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Aesthetic Score" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding AestheticScore, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Hyper Network" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding HyperNetwork, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Hyper Network Strength" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding HyperNetworkStrength, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Clip Skip" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding ClipSkip, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="ENSD" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Ensd, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+        
+                            <Label Text="Prompt Strength" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding PromptStrength, Mode=OneWay}" IsReadOnly="True" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </ContentView>
+</ContentPage>

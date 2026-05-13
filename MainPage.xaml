@@ -4,14 +4,18 @@
              x:Class="NovelAI_GUI_Client.MainPage"
              Loaded="ContentPage_Loaded">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Option" Clicked="Button_Clicked_Option">
-        </ToolbarItem>
+        <ToolbarItem Text="Option" Clicked="Button_Clicked_Option"/>
+        <ToolbarItem Text="Info" Clicked="ToolbarItem_Clicked" Command="{Binding CanNavigateInfoPageCommand}" CommandParameter="{Binding CurrentInfoPage}"/>
     </ContentPage.ToolbarItems>
     <ContentView>
+        <ContentView.GestureRecognizers>
+            <DropGestureRecognizer AllowDrop="True" Drop="DropGestureRecognizer_Drop"/>
+        </ContentView.GestureRecognizers>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <StackLayout Grid.Column="0">
                 <Label Text="Prompt"/>
@@ -20,16 +24,29 @@
                 <Entry Text="{Binding NegativePrompt}" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
             </StackLayout>
             <StackLayout Grid.Column="1">
-                <Button Text="Generate Image" Clicked="Button_Clicked_GenerateImage"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Horizontal">
+                    <Picker ItemsSource="{Binding ImageResolutionTypes}" SelectedIndex="{Binding GenerateImageResolutionIndex}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                    <Label Text="Width"/>
+                    <Entry Text="{Binding GenerateImageWidth}" TextChanged="Entry_TextChanged"/>
+                    <Label Text="Height"/>
+                    <Entry Text="{Binding GenerateImageHeight}" TextChanged="Entry_TextChanged_1"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Column="2">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="5*"/>
                     </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Text="Generate Image" Clicked="Button_Clicked_GenerateImage"/>
+                    <Border Grid.Row="1" Stroke="Black">
+                        <Image Source="{Binding GeneratedImageSource}" Aspect="AspectFit"/>
+                    </Border>
+                    <ScrollView Grid.Row="2">
+                        <Label Text="{Binding ResponseMessage}"/>
+                    </ScrollView>
                 </Grid>
-                <Image Grid.Row="0" Grid.Column="0" Source="{Binding GeneratedImageSource}" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
             </StackLayout>
         </Grid>
     </ContentView>

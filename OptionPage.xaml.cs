@@ -5,29 +5,29 @@ namespace NovelAI_GUI_Client;
 
 public partial class OptionPage : ContentPage
 {
-	private readonly MainPage.OptionDataSet optionDataSet;
+    private readonly MainPage.OptionDataSet optionDataSet;
 
-	public OptionPage(MainPage.OptionDataSet optionDataSet)
-	{
-		InitializeComponent();
+    public OptionPage(MainPage.OptionDataSet optionDataSet)
+    {
+        InitializeComponent();
 
-		this.optionDataSet = optionDataSet;
+        this.optionDataSet = optionDataSet;
 
-		BindingContext = optionDataSet;
-	}
+        BindingContext = optionDataSet;
+    }
 
     private void ContentPage_Unloaded(object sender, EventArgs e)
     {
-		optionDataSet.SaveOption();
+        optionDataSet.SaveOption();
     }
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-		var result = await FolderPicker.Default.PickAsync();
+        var result = await FolderPicker.Default.PickAsync();
 
-		if (result.IsSuccessful)
-		{
-			optionDataSet.OutputPath = result.Folder.Path;
-		}
+        if (result.IsSuccessful)
+        {
+            optionDataSet.OutputPath = result.Folder.Path;
+        }
     }
 }
