@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO.Compression;
 using NovelAI_API;
 
@@ -10,7 +10,9 @@ public partial class MainPage : ContentPage
 
     private partial class CanNavigateInfoPageCommand : System.Windows.Input.ICommand
     {
+#pragma warning disable CS0067 // Event is not used in implementation
         public event EventHandler? CanExecuteChanged;
+#pragma warning restore CS0067
 
         public bool CanExecute(object? parameter)
         {
@@ -48,7 +50,11 @@ public partial class MainPage : ContentPage
         [ObservableProperty]
         private InfoPage? currentInfoPage = null;
 
-        public string[] ImageResolutionTypes { get; set; } = Enum.GetValues(typeof(NovelAiApi.ImageResolutionType)).Cast<NovelAiApi.ImageResolutionType>().Select(type => $"{type} {NovelAiApi.GetImageResolutionPixel(type)}").Concat(["Custom"]).ToArray();
+        public string[] ImageResolutionTypes { get; set; } =
+        [
+            .. Enum.GetValues<NovelAiApi.ImageResolutionType>().Cast<NovelAiApi.ImageResolutionType>().Select(type => $"{type} {NovelAiApi.GetImageResolutionPixel(type)}"),
+            "Custom",
+        ];
 
         private CanNavigateInfoPageCommand CanNavigateInfoPageCommand { get; set; } = new();
     }
@@ -81,7 +87,7 @@ public partial class MainPage : ContentPage
     private readonly OptionDataSet optionDataSet = new();
     private static bool IsFirstLoaded = true;
 
-    private (int width, int height)[] ImageResolutionTable { get; } = Enum.GetValues(typeof(NovelAiApi.ImageResolutionType)).Cast<NovelAiApi.ImageResolutionType>().Select(type => NovelAiApi.GetImageResolutionPixel(type)).ToArray();
+    private (int width, int height)[] ImageResolutionTable { get; } = [.. Enum.GetValues<NovelAiApi.ImageResolutionType>().Cast<NovelAiApi.ImageResolutionType>().Select(type => NovelAiApi.GetImageResolutionPixel(type))];
 
 
     public MainPage(IHttpClientFactory httpClientFactory)
@@ -99,7 +105,7 @@ public partial class MainPage : ContentPage
     {
         if (IsFirstLoaded && string.IsNullOrEmpty(optionDataSet.ApiKey))
         {
-            var result = await DisplayAlert("Api Key", "set Api Key.", "OK", "Cancel");
+            var result = await DisplayAlertAsync("Api Key", "set Api Key.", "OK", "Cancel");
 
             if (result)
             {
@@ -177,16 +183,19 @@ public partial class MainPage : ContentPage
 
         if ((!string.IsNullOrEmpty(path)) && (File.Exists(path)))
         {
-            using var stream = new FileStream(path, FileMode.Open);
+            // TODO: Update MetadataExtractor integration for .NET 10
+            // Metadata.ReadFromStreamAsync is not available in updated library
+            // using var stream = new FileStream(path, FileMode.Open);
+            // var fileParameters = await MetadataExtractor.Metadata.ReadFromStreamAsync(Path.GetExtension(path), stream);
+            // if (fileParameters is not null)
+            // {
+            //     dataSet.CurrentInfoPage = new InfoPage(path, fileParameters);
+            // }
 
-            var fileParameters = await MetadataExtractor.Metadata.ReadFromStreamAsync(Path.GetExtension(path), stream);
+            // Temporary solution - open InfoPage without metadata
+            dataSet.CurrentInfoPage = new InfoPage();
 
-            if (fileParameters is not null)
-            {
-                dataSet.CurrentInfoPage = new InfoPage(path, fileParameters);
-
-                await Navigation.PushAsync(dataSet.CurrentInfoPage);
-            }
+            await Navigation.PushAsync(dataSet.CurrentInfoPage);
         }
     }
 
