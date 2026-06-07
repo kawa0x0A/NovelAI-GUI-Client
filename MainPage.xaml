@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NovelAI_GUI_Client.MainPage"
@@ -19,9 +19,9 @@
             </Grid.ColumnDefinitions>
             <StackLayout Grid.Column="0">
                 <Label Text="Prompt"/>
-                <Entry Text="{Binding Prompt}" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
+                <Entry Text="{Binding Prompt}" VerticalOptions="Fill" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
                 <Label Text="Negative Prompt"/>
-                <Entry Text="{Binding NegativePrompt}" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
+                <Entry Text="{Binding NegativePrompt}" VerticalOptions="Fill" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
             </StackLayout>
             <StackLayout Grid.Column="1">
                 <StackLayout Orientation="Horizontal">
@@ -33,7 +33,7 @@
                 </StackLayout>
             </StackLayout>
             <StackLayout Grid.Column="2">
-                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="10*"/>
