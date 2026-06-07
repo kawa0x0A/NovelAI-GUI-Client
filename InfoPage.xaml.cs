@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using MetadataExtractor;
+using System.Diagnostics;
+// using MetadataExtractor;
 
 namespace NovelAI_GUI_Client;
 
@@ -73,67 +74,51 @@ public partial class InfoPage : ContentPage
 
     private readonly InfoDataSet infoDataSet = new();
 
-    public InfoPage(string imagePath, FileParameters fileParameters)
+    // TODO: .NET 10 migration - MetadataExtractor API updated
+    // FileParameters type not found in MetadataExtractor library
+    // Update this after MetadataExtractor library migration is researched
+    public InfoPage()
     {
         InitializeComponent();
-
-        SetImageInfo(imagePath, fileParameters);
-
         BindingContext = infoDataSet;
     }
 
-    private void SetImageInfo(string imagePath, FileParameters fileParameters)
-    {
-        infoDataSet.Image = ImageSource.FromFile(imagePath);
-
-        infoDataSet.Prompt = fileParameters.Prompt;
-        infoDataSet.NegativePrompt = fileParameters.NegativePrompt;
-        infoDataSet.Steps = fileParameters.Steps;
-        infoDataSet.Sampler = fileParameters.Sampler;
-        infoDataSet.CfgScale = fileParameters.CFGScale;
-        infoDataSet.Seed = fileParameters.Seed;
-        infoDataSet.Width = fileParameters.Width;
-        infoDataSet.Height = fileParameters.Height;
-        infoDataSet.ModelHash = fileParameters.ModelHash;
-        infoDataSet.Model = fileParameters.Model;
-        infoDataSet.BatchSize = fileParameters.BatchSize;
-        infoDataSet.BatchPos = fileParameters.BatchPos;
-        infoDataSet.OtherParameters = fileParameters.OtherParameters;
-        infoDataSet.Parameters = fileParameters.Parameters;
-        infoDataSet.AestheticScore = fileParameters.AestheticScore;
-        infoDataSet.HyperNetwork = fileParameters.HyperNetwork;
-        infoDataSet.HyperNetworkStrength = fileParameters.HyperNetworkStrength;
-        infoDataSet.ClipSkip = fileParameters.ClipSkip;
-        infoDataSet.Ensd = fileParameters.ENSD;
-        infoDataSet.PromptStrength = fileParameters.PromptStrength;
-    }
+    // STUB: FileParameters - migrate from MetadataExtractorCustom
+    // private void SetImageInfo(string imagePath, FileParameters fileParameters)
+    // {
+    //     infoDataSet.Image = ImageSource.FromFile(imagePath);
+    //     infoDataSet.Prompt = fileParameters.Prompt;
+    //     // ... other properties
+    // }
 
     private async void DropGestureRecognizer_Drop(object sender, DropEventArgs e)
     {
         var path = string.Empty;
 
 #if WINDOWS
-            var items = await e.PlatformArgs!.DragEventArgs.DataView.GetStorageItemsAsync();
+        var items = await e.PlatformArgs!.DragEventArgs.DataView.GetStorageItemsAsync();
 
-            if (items.Count > 0)
-            {
-                var item = items[0];
-
-                path = item.Path;
-            }
+        if (items.Count > 0)
+        {
+            var item = items[0];
+            path = item.Path;
+        }
 #else
         await Task.FromResult(0);
 #endif
 
         if ((!string.IsNullOrEmpty(path)) && (File.Exists(path)))
         {
-            using var stream = new FileStream(path, FileMode.Open);
-
-            var fileParameters = await MetadataExtractor.Metadata.ReadFromStreamAsync(Path.GetExtension(path), stream);
-
-            if (fileParameters is not null)
+            // TODO: Implement image metadata extraction using MetadataExtractor library
+            // For now, just load the image without metadata parsing
+            try
             {
-                SetImageInfo(path, fileParameters);
+                infoDataSet.Image = ImageSource.FromFile(path);
+            }
+            catch (Exception ex)
+            {
+                // Log error - metadata extraction not yet implemented for .NET 10
+                Debug.WriteLine($"Error loading image: {ex.Message}");
             }
         }
     }
